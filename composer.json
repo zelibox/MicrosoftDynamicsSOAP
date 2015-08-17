@@ -1,0 +1,16 @@
+{
+    "name": "zelibox/microsoft-dynamics-soap",
+    "description": "Microsoft Dynamics SOAP integration with PHP (http authentication)",
+    "authors": [
+        {
+            "name": "zelibox",
+            "email": "zeli.box@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-0": {
+            "MicrosoftDynamicsSOAP\\": ["src/"]
+        }
+    }
+}
