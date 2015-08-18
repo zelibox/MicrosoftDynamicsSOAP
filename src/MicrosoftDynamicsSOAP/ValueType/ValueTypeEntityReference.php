@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Омельченко
- * Date: 17.08.2015
- * Time: 16:56
- */
 
 namespace MicrosoftDynamicsSOAP\ValueType;
 
 
-class ValueTypeEntity extends AbstractValueType
+class ValueTypeEntityReference extends AbstractValueType
 {
     /**
      * @return \DOMElement
@@ -38,4 +32,12 @@ class ValueTypeEntity extends AbstractValueType
         $this->getValueNode()->childNodes->item(1)->nodeValue = $value['logicalName'];
     }
 
+    public function getValue()
+    {
+        return array(
+            'id' => $this->getValueNode()->childNodes->item(0)->nodeValue,
+            'logicalName' => $this->getValueNode()->childNodes->item(1)->nodeValue,
+            'name' => $this->getValueNode()->childNodes->item(2)->nodeValue
+        );
+    }
 }

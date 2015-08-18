@@ -9,8 +9,8 @@
     ],
     "require": {},
     "autoload": {
-        "psr-0": {
-            "MicrosoftDynamicsSOAP\\": ["src/"]
+        "psr-4": {
+            "MicrosoftDynamicsSOAP\\": ["src/MicrosoftDynamicsSOAP"]
         }
     }
 }

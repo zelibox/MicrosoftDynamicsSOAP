@@ -27,11 +27,11 @@ abstract class AbstractValueType
      */
     protected function getKeyNode()
     {
-        if(!$this->elementXML->getElementsByTagName('b:key')->length) {
+        if(!$this->elementXML->getElementsByTagNameNS('http://schemas.datacontract.org/2004/07/System.Collections.Generic', 'key')->length) {
             $elementKey = $this->document->createElement('b:key');
             $nodeKey = $this->elementXML->appendChild($elementKey);
         } else {
-            $nodeKey =  $this->elementXML->getElementsByTagName('b:key')->item(0);
+            $nodeKey =  $this->elementXML->getElementsByTagNameNS('http://schemas.datacontract.org/2004/07/System.Collections.Generic', 'key')->item(0);
         }
 
         return $nodeKey;
@@ -42,11 +42,11 @@ abstract class AbstractValueType
      */
     protected function getValueNode()
     {
-        if(!$this->elementXML->getElementsByTagName('b:value')->length) {
+        if(!$this->elementXML->getElementsByTagNameNS('http://schemas.datacontract.org/2004/07/System.Collections.Generic', 'value')->length) {
             $elementValue = $this->createValueElement();
             $nodeValue = $this->elementXML->appendChild($elementValue);
         } else {
-            $nodeValue =  $this->elementXML->getElementsByTagName('b:value')->item(0);
+            $nodeValue =  $this->elementXML->getElementsByTagNameNS('http://schemas.datacontract.org/2004/07/System.Collections.Generic', 'value')->item(0);
         }
 
         return $nodeValue;
@@ -67,5 +67,9 @@ abstract class AbstractValueType
     public function getElementXML()
     {
         return $this->elementXML;
+    }
+
+    public function getValue() {
+        return $this->getValueNode()->nodeValue;
     }
 }

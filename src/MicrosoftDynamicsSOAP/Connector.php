@@ -2,19 +2,20 @@
 
 namespace MicrosoftDynamicsSOAP;
 
+
 /**
  * Class MicrosoftDynamicsSOAP
  * @package MicrosoftDynamicsSOAP
  */
 class Connector
 {
-    /** @var string  */
+    /** @var string */
     private $user;
 
-    /** @var string  */
+    /** @var string */
     private $password;
 
-    /** @var string  */
+    /** @var string */
     private $location;
 
     /**
@@ -32,10 +33,17 @@ class Connector
     /**
      * @return Request\RequestCreate
      */
-    public function createRequestCreate() {
-        $request = new Request\RequestCreate($this);
+    public function createRequestCreate()
+    {
+        return new Request\RequestCreate($this);
+    }
 
-        return $request;
+    /**
+     * @return Request\RequestRetrieveMultiple
+     */
+    public function createRequestRetrieveMultiple()
+    {
+        return new Request\RequestRetrieveMultiple($this);
     }
 
     /**

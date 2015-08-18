@@ -2,17 +2,22 @@
 
 namespace MicrosoftDynamicsSOAP\Request;
 
-
 class RequestCreate extends AbstractRequest
 {
     /** @var  string */
     private $entityName = null;
 
+    /** @var array */
     private $values = array();
 
+    /**
+     * @param $entityName string
+     * @return $this
+     */
     public function setEntityName($entityName)
     {
         $this->entityName = $entityName;
+
         return $this;
     }
 
@@ -23,6 +28,8 @@ class RequestCreate extends AbstractRequest
             'name' => $name,
             'value' => $value
         );
+
+        return $this;
     }
 
     protected function constructXML(\DOMDocument $XML)
@@ -43,12 +50,12 @@ class RequestCreate extends AbstractRequest
 
         foreach ($this->values as $value) {
             $typeClassName = '\\MicrosoftDynamicsSOAP\\ValueType\\ValueType' . ucfirst($value['type']);
-            if(!class_exists($typeClassName)) {
+            if (!class_exists($typeClassName)) {
                 throw new \Exception(sprintf('Type "%s" not found', $value['type']));
             }
             $elementKeyValue = $XML->createElement('a:KeyValuePairOfstringanyType');
-            new $typeClassName($XML, $elementKeyValue, $value['name'],  $value['value']);
-            $nodeAttributes->appendChild($elementKeyValue);
+            $nodeKeyValue = $nodeAttributes->appendChild($elementKeyValue);
+            new $typeClassName($XML, $nodeKeyValue, $value['name'], $value['value']);
         }
 
         $elementEntityState = $XML->createElement('a:EntityState');

@@ -24,4 +24,9 @@ class ValueTypeDatetime extends AbstractValueType
         }
         $this->getValueNode()->nodeValue = $value->format('Y-m-d\TH:i:s\Z');
     }
+
+    public function getValue()
+    {
+        return new \DateTime(parent::getValue());
+    }
 }

@@ -3,15 +3,12 @@
 namespace MicrosoftDynamicsSOAP\ValueType;
 
 
-class ValueTypeBoolean extends AbstractValueType
+class ValueTypeInt extends AbstractValueType
 {
-    /**
-     * @return \DOMElement
-     */
     protected function createValueElement()
     {
         $elementValue = $this->document->createElement('b:value');
-        $elementValue->setAttribute('i:type', 'c:boolean');
+        $elementValue->setAttribute('i:type', 'c:int');
         $elementValue->setAttribute('xmlns:c', 'http://www.w3.org/2001/XMLSchema');
 
         return $elementValue;
@@ -19,11 +16,6 @@ class ValueTypeBoolean extends AbstractValueType
 
     protected function setValue($value)
     {
-        $this->getValueNode()->nodeValue = ($value) ? 'true' : 'false';
-    }
-
-    public function getValue()
-    {
-        return (parent::getValue() == 'true');
+        $this->getValueNode()->nodeValue = (int) $value;
     }
 }

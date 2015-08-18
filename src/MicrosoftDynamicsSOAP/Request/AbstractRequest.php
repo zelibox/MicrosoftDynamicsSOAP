@@ -2,7 +2,8 @@
 
 namespace MicrosoftDynamicsSOAP\Request;
 
-use \MicrosoftDynamicsSOAP\Connector;
+use MicrosoftDynamicsSOAP\Connector;
+use MicrosoftDynamicsSOAP\Response\AbstractResponse;
 
 abstract class AbstractRequest
 {
@@ -12,8 +13,10 @@ abstract class AbstractRequest
     /** @var \DOMDocument */
     private $XML;
 
-
-    final public function __construct(Connector $connector)
+    /**
+     * @param Connector $connector
+     */
+    public function __construct(Connector $connector)
     {
         $this->connector = $connector;
 
@@ -26,13 +29,9 @@ abstract class AbstractRequest
         $this->XML = $xml;
     }
 
-    protected function getActionSOAP()
-    {
-        $nameRequest = substr(strrchr(get_called_class(), "\\"), 1);
-        $nameRequest = substr($nameRequest, 7);
-        return 'http://schemas.microsoft.com/xrm/2011/Contracts/Services/IOrganizationService/' . $nameRequest;
-    }
-
+    /**
+     * @return AbstractResponse
+     */
     public function send()
     {
         $headers = array(
@@ -53,23 +52,50 @@ abstract class AbstractRequest
         curl_setopt($ch, CURLOPT_USERPWD, $this->connector->getUser() . ':' . $this->connector->getPassword());
         $response = curl_exec($ch);
 
-        return $response;
+        $classNameResponse = $typeClassName = '\\MicrosoftDynamicsSOAP\\Response\\Response' . $this->getNameRequest();
+
+        return new $classNameResponse($response);
     }
 
     /**
      * @return \DOMDocument
      */
-    public function getXML()
+    protected function getXML()
     {
         return $this->XML;
     }
 
+    /**
+     * @return string
+     */
     private function getData()
     {
         $this->constructXML($this->getXML());
         return $this->XML->saveXML();
     }
 
+    /**
+     * @return string
+     */
+    private function getNameRequest()
+    {
+        $nameRequest = substr(strrchr(get_called_class(), "\\"), 1);
+        $nameRequest = substr($nameRequest, 7);
+
+        return $nameRequest;
+    }
+
+    /**
+     * @return string
+     */
+    private function getActionSOAP()
+    {
+        return 'http://schemas.microsoft.com/xrm/2011/Contracts/Services/IOrganizationService/' . $this->getNameRequest();
+    }
+
+    /**
+     * @param \DOMDocument $XML
+     */
     abstract protected function constructXML(\DOMDocument $XML);
 }
 
