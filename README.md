@@ -34,7 +34,7 @@ $response = $requestCreate->send();
 echo $response->getGuid();
 ```
 
-##Example RetrieveMultiple
+##Example RetrieveMultiple:
 ```php
 $requestRetrieveMultiple = $microsoftDynamicsSOAP->createRequestRetrieveMultiple();
 $requestRetrieveMultiple
