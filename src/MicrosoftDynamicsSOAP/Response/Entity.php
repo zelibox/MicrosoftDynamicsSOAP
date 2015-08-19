@@ -21,7 +21,8 @@ class Entity
             $key = $elementKeyValue->getElementsByTagName('key')->item(0)->nodeValue;
             /** @var \DOMElement $elementValue */
             $elementValue = $elementKeyValue->getElementsByTagName('value')->item(0);
-            $type = explode(':', $elementValue->getAttribute('i:type'))[1];
+            $explodeType = explode(':', $elementValue->getAttribute('i:type'));
+            $type = $explodeType[1];
             $typeClassName = '\\MicrosoftDynamicsSOAP\\ValueType\\ValueType' . ucfirst($type);
             if (!class_exists($typeClassName)) {
                 throw new \Exception(sprintf('Type "%s" not found', $type));
