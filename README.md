@@ -19,7 +19,7 @@ $requestCreate
     ->addValue('string', 'phonenumber', '900990099')
     ->addValue('boolean', 'is_active', false)
     ->addValue(
-        'entity',
+        'entityReference',
         'client',
         array(
             'logicalName' => 'client',
